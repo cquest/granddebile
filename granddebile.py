@@ -20,15 +20,10 @@ fins = ['na !','et voilà !','okayyy ?',"et pis c'est tout !","et paf !",'facile
 theme = themes[random.randrange(len(themes))]
 
 # constitution du modèle
-text_model = markovify.Text(open(theme['court']+'-titres.txt').read())
+text_model = markovify.Text(open(theme['court']+'-titres.txt').read(), state_size=3)
 
 # composition du tweet
-t = ''
-if random.randrange(10) > 8:
-    t = '#GrandDebatNational '
-t = t + theme['long'] + ' ?\\n\\n'
-t = t + text_model.make_short_sentence(120-len(t))
-fin = fins[random.randrange(len(fins))]
-if len(t+fin) < 136:
-    t = t + '\\n\\n'+fin
+t = theme['long'] + ' ?\\n\\n'
+t = t + text_model.make_short_sentence(200-len(t))
+t = t + '\\n\\n' + fins[random.randrange(len(fins))]
 print(t)
